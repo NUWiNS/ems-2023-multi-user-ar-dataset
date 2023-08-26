@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="diagram">Diagram will be placed here</div>
+<script src="webfont.js"></script>
+<script src="snap.svg-min.js"></script>
+<script src="underscore-min.js"></script>
+<script src="sequence-diagram-snap-min.js"></script>
+<script src="svginnerhtml.min.js"></script>
+<script>
+    var txt = `
+participant host
+participant cloud
+participant resolver
+
+resolver->resolver: receive point updates
+host->host: user touches screen
+host->host: add a stroke
+host->host: add points to stroke
+host->cloud: send data pkt to cloud
+host->host: add points to stroke
+host->host: add points to stroke
+host->host: add points to stroke
+cloud-->host: receive ack pkt from cloud
+cloud-->resolver: receive data pkt from cloud
+resolver->cloud: send ack pkt to cloud
+resolver->resolver: finish rendering
+cloud-->host: receive data pkt from cloud
+host->host: notified by finish of cloud processing
+host->cloud: send data pkt to cloud
+cloud-->host: receive ack pkt from cloud
+cloud-->resolver: receive data pkt from cloud
+resolver->cloud: send ack pkt to cloud
+resolver->resolver: receive point updates
+resolver->resolver: finish rendering
+`
+    var d = Diagram.parse(txt);
+    var options = {theme: 'simple'};
+    d.drawSVG('diagram', options);
+</script>
+</body>
+</html>
